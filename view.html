@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input and Button Example</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        margin: 0 !important;
+        background: #f9f9f9 !important;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container .form {
+        background: #fff;
+        padding: 3rem;
+        border-radius: 0.75rem;
+        box-shadow: 4px 4px 10px -2px rgba(3, 24, 46, 0.2);
+      }
+      .container .form form {
+        display: flex;
+        flex-direction: column;
+      }
+      .container .form form .group {
+        display: flex;
+        justify-content: space-between;
+        align-content: space-between;
+        width: 30vw;
+      }
+      .container .form form .ungroup {
+        display: flex;
+        justify-content: space-between;
+        align-content: space-between;
+        width: 30vw;
+      }
+      .container .form form .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+      .container .form form .form-group #labelmeter {
+        margin-bottom: 0.5rem;
+        color: #074486;
+        font-weight: 500;
+      }
+
+      .container .form .group input[type="text"],
+      .container .form textarea {
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 0.5rem;
+        outline: none;
+        margin-bottom: 1rem;
+        width: 100%;
+        resize: none;
+      }
+      #amount {
+        padding: 0.75rem;
+        font-size: 1rem;
+
+        border: 1px solid #000;
+        border-radius: 0.5rem;
+        outline: none;
+        margin-bottom: 1rem;
+        width: 100%;
+        resize: none;
+      }
+
+      .container .form #btn {
+        padding: 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        outline: none;
+        width: 10vw;
+        background: #074486;
+        color: #fff;
+        margin-top: 0.3rem;
+      }
+      .container .form #btn:hover {
+        background: #007bff;
+      }
+      #none{
+        visibility: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="form">
+        <form action="" method="post">
+          <div class="group">
+            <div class="form-group">
+              <label for="name" id="labelmeter">Lastname:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value="Abdulrahmon"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="name" id="labelmeter">Firstname:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value="Hammed"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="address" id="labelmeter">Address:</label>
+            <textarea name="" id="address" readonly>
+The Postgraduate College, University of Ibadan, Ibadan, Nigeria.</textarea
+            >
+          </div>
+
+          <div class="group">
+            <div class="form-group">
+              <label for="phone" id="labelmeter">Phone Number:</label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                value="09032785338"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="email" id="labelmeter">Email Address:</label>
+              <input
+                type="text"
+                id="email"
+                name="email"
+                value="iljimae2019@gmail.com"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="form-group">
+              <label for="company" id="labelmeter">Company:</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                value="Shell plc"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="metreno" id="labelmeter">Metre Number:</label>
+              <input
+                type="text"
+                id="metreno"
+                name="metreno"
+                value="sh8958756"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="group">
+            <div class="form-group">
+              <label for="category" id="labelmeter">Category:</label>
+              <input
+                type="text"
+                id="category"
+                name="category"
+                value="Oil & Gas"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="date" id="labelmeter">Last Payment Date:</label>
+              <input
+                type="text"
+                id="date"
+                name="date"
+                value="May 14 2024"
+                readonly
+              />
+            </div>
+          </div>
+
+          <div class="ungroup">
+          <div class="form-group">
+            <label for="amount" id="labelmeter">Enter Amount:</label>
+
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              placeholder="Enter Amount"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="btn" id="none">Enter Amount:</label>
+            <input id="btn" type="button" value="Submit" />
+          </div>
+
+        </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

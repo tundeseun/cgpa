@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Dropdowns</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <label for="field">Select Field:</label>
+    <select id="field" name="field">
+      <option value="">Select Field</option>
+      <!-- Options will be populated dynamically using PHP -->
+    </select>
+
+    <br /><br />
+
+    <label for="effectivedate">Select Effective Date:</label>
+    <select id="effectivedate" name="effectivedate">
+      <option value="">Select Effective Date</option>
+      <!-- Options will be populated dynamically using AJAX -->
+    </select>
+
+    <br /><br />
+
+    <label for="external">Select External:</label>
+    <select id="external" name="external">
+      <option value="">Select External</option>
+      <!-- Options will be populated dynamically using AJAX -->
+    </select>
+
+    <script>
+      $(document).ready(function () {
+        // Populate the first dropdown on page load using PHP
+        $.ajax({
+          url: "get_fields.php",
+          method: "GET",
+          success: function (response) {
+            $("#field").html(response);
+          },
+        });
+
+        // When a field is selected, populate the second dropdown
+        $("#field").on("change", function () {
+          var fieldID = $(this).val();
+          if (fieldID) {
+            $.ajax({
+              url: "get_effectivedates.php",
+              method: "POST",
+              data: { field: fieldID }, // Sending 'field' instead of 'field_id'
+              success: function (response) {
+                $("#effectivedate").html(response);
+                $("#external").html(
+                  '<option value="">Select External</option>'
+                );
+              },
+            });
+          } else {
+            $("#effectivedate").html(
+              '<option value="">Select Effective Date</option>'
+            );
+            $("#external").html('<option value="">Select External</option>');
+          }
+        });
+
+        // When an effective date is selected, populate the third dropdown
+        $("#effectivedate").on("change", function () {
+          var effectiveDate = $(this).val();
+          var fieldID = $("#field").val();
+          if (effectiveDate) {
+            $.ajax({
+              url: "get_external.php",
+              method: "POST",
+              data: { field: fieldID, effective_date: effectiveDate },
+              success: function (response) {
+                $("#external").html(response);
+              },
+            });
+          } else {
+            $("#external").html('<option value="">Select External</option>');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

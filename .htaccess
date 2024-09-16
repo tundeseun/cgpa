@@ -1,0 +1,15 @@
+Options -MultiViews
+RewriteEngine On
+
+# Exclude existing files and directories from the rewrite rule
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)/(\d+)/?$ $1.php?id=$2 [QSA,L]
+# RewriteRule ^([^/]+)/(\d+)/?$ $1.php [QSA,L]
+# RewriteRule ^([^/]+)/?$ $1.php [QSA,L]
+# Rewrite rule to hide the file extension and keep $_GET['id']
+# RewriteRule ^menu/(\d+)/?$ menu.php?id=$1 [QSA,L]
+# RewriteRule ^setupscore/(\d+)/?$ setupscore.php?id=$1 [QSA,L]
+
+# Rewrite menu to menu.php
+#RewriteRule ^menu$ menu.php [QSA,L]

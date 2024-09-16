@@ -1,0 +1,25 @@
+<html>
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+  <WISPAccessGatewayParam
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://10.0.4.1/xml/WISPAccessGatewayParam.xsd">
+    <Redirect>
+	<AccessProcedure>1.0</AccessProcedure>
+	<AccessLocation></AccessLocation>
+	<LocationName></LocationName>
+	<LoginURL>http://10.0.4.1/login?target=xml</LoginURL>
+	<MessageType>100</MessageType>
+	<ResponseCode>0</ResponseCode>
+    </Redirect>
+  </WISPAccessGatewayParam>
+-->
+<head>
+<title>...</title>
+<meta http-equiv="refresh" content="0; url=http://10.0.4.1/login?dst=http%3A%2F%2Fcdn1.images.touristlink.com%2Fdata%2Fcache%2FU%2FN%2FI%2FV%2FE%2FR%2FS%2FI%2Funiversity-of-ibadan%5F700%5F0.jpg">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="-1">
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Input and Button Example</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  box-sizing: border-box;
+
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  margin: 0 !important;
+  background: #f9f9f9 !important;
+
+}   
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+
+}
+
+.container .form{
+    background: #fff;
+    padding: 3rem;
+    border-radius: 0.75rem;
+    box-shadow: 4px 4px 10px -2px rgba(3, 24, 46, 0.2);
+
+    
+}
+.container .form form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.container .form form .form-group{
+    display: flex;
+    flex-direction: column;
+
+}
+.container .form form .form-group #labelmeter{
+    margin-bottom: 0.5rem;
+    color: #074486;
+
+}
+
+.container .form #meter{
+    padding: 0.75rem;
+    border: 1px solid #000;
+    border-radius: 0.5rem;
+    outline: none;
+    width: 30vw;
+    margin-bottom: 1rem;
+}
+.container .form #btn{
+    padding: 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    outline: none;
+    width: 10vw;
+    background: #074486;
+    color: #fff;
+    
+}
+.container .form #btn:hover{
+    background: #007bff;
+}
+</style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="form">
+            <form action="" method="post">
+
+                <div class="form-group">
+                    <label for="meter" id="labelmeter">Enter Metre Number:</label>
+                    <input type="text" id="meter" name="meter" placeholder="Enter Metre Number">
+                </div>
+
+                <input id="btn" type="button" value="Submit">
+
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>
