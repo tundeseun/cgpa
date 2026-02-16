@@ -1,19 +1,19 @@
 <?php session_start();
-$dept = $_SESSION["dept_new"];
-$name = $_SESSION["name"];
-include_once('../function/script.php');
+    $dept = $_SESSION["dept_new"];
+    $name = $_SESSION["name"];
+    include_once '../function/script.php';
 
-if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
-    session_destroy();
-    header('Location: ../');
-}
+    if (! isset($_SESSION["dept_new"]) && ! isset($_SESSION["name"])) {
+        session_destroy();
+        header('Location: ../');
+    }
 
-if (isset($_POST['logout'])) {
-    session_destroy();
-    header('Location: ../');
-}
+    if (isset($_POST['logout'])) {
+        session_destroy();
+        header('Location: ../');
+    }
 
-$admin = $_SESSION["name"];
+    $admin = $_SESSION["name"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -112,7 +112,7 @@ $admin = $_SESSION["name"];
 
         .contain {
             margin: auto;
-            max-width: 1100px;
+            max-width: 1300px;
             padding: 1rem;
             overflow: auto;
 
@@ -232,6 +232,18 @@ $admin = $_SESSION["name"];
             background: #e74a3b !important;
             color: #fff;
         }
+
+        .btns{
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            border-radius: 0.2rem;
+        }
     </style>
 
 </head>
@@ -243,7 +255,7 @@ $admin = $_SESSION["name"];
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include('../menu/menu.php'); ?>
+        <?php include '../menu/menu.php'; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -253,7 +265,7 @@ $admin = $_SESSION["name"];
             <div id="content">
 
                 <!-- Topbar -->
-                <?php include('../navbar/nav.php'); ?>
+                <?php include '../navbar/nav.php'; ?>
 
 
                 <div class="container-fluid">
@@ -261,13 +273,13 @@ $admin = $_SESSION["name"];
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800"><?php if (isset($dept)) {
-                                                                showdept($dept, $conn);
-                                                            }  ?></h1>
+                                                              showdept($dept, $conn);
+                                                          }?></h1>
 
                     </div>
 
                     <div id="form" class="contain">
-                        <!-- 
+                        <!--
                         <form action="../boardresult.php" method="post">
                             <h4> View BroadSheet </h4>
                             <div class="form-group">
@@ -309,7 +321,7 @@ $admin = $_SESSION["name"];
                                 <select id="sec" name="sec">
                                     <option value="">Select Session</option>
                                     <?php //include_once("function/connect.php");
-                                    //showsessionexamined2($conn);
+                                                                                  //showsessionexamined2($conn);
                                     ?>
                                 </select>
                             </div>
@@ -326,13 +338,11 @@ $admin = $_SESSION["name"];
                         </div>
                         <?php
 
-
-                            if(isset($_POST['submit'])){
+                            if (isset($_POST['submit'])) {
                                 $effective = $_POST['effective'];
-                                $facDate = $_POST['facDate'];
+                                $facDate   = $_POST['facDate'];
                                 setFacultyMeetingDate($effective, $facDate, $conn);
                             }
-
 
                         ?>
 
@@ -342,11 +352,15 @@ $admin = $_SESSION["name"];
 
                                 <tr>
                                     <th> S/N</th>
+                                    <th> Degree</th>
                                     <th> Specialization</th>
+                                    <th> External Examiner</th>
+                                    <th> Effective Date</th>
                                     <th> Result Type</th>
+                                    <th> Mode of Study</th>
                                     <th> Stage </th>
-                                    <th> Faculty Meeting </th>
-                                    <th> View Result</th>
+                                    <!-- <th> Faculty Meeting </th> -->
+                                    <th> Action</th>
 
 
                                 </tr>
@@ -522,6 +536,11 @@ $admin = $_SESSION["name"];
                                     } else {
                                         facultyText = `<span class=stage id=stage-success>${result.facultyDate}</span>`;
                                     }
+
+                                    // if (result.stage < 3 ) {
+                                    //     stageText = '<span class=stage id=stage-error>Not Processed</span>';
+                                    // } else
+
                                     switch (result.stage) {
                                         case '1':
                                             stageText = 'Processed <span class=stage id=stage-success>1/4</span>';
@@ -536,7 +555,7 @@ $admin = $_SESSION["name"];
                                             stageText = 'Approved At Board <span class=stage id=stage-success>4/4</span>';
                                             break;
                                         case '5':
-                                            stageText = 'Rejected At Faculty <span class=stage id=stage-error>Reprocess</span>';
+                                            stageText = 'Rejected At Board <span class=stage id=stage-error>Modify(Reprocess)Result</span>';
                                             break;
                                         default:
                                             stageText = `Stage ${result.stage}`;
@@ -544,14 +563,41 @@ $admin = $_SESSION["name"];
 
                                     rows += `<tr>
                                     <td>${index + 1 + (page - 1) * 10}</td>
+                                    <td>${result.degree_name}</td>
                                     <td>${result.specialization}</td>
+                                    <td>${result.externalName}</td>
+                                    <td>${result.effectivedate}</td>
                                     <td>${result.resultT}</td>
+                                    <td>${result.mode}</td>
                                     <td>${stageText}</td>
-                                    <td>${facultyText}</td>
+                                    
                                     <td>
-                                    <a  href='../pdf.php?degree=${result.degree_id}&field=${result.field_id}&effectivedate=${result.effectivedate}&sec=${result.sec}&resulttype=${result.resulttype}&external=${result.external}' class='success'>
-                                        <i class="fas fa-download fa-sm text-white-50"></i> Download
-                                      </a>
+                                    <div class="btns">
+                                    
+                                    <button type="button" class="btn btn-primary btn-sm submit-board-btn"
+            data-field-id="${result.field_id}"
+            data-degree-id="${result.degree_id}"
+            data-effectivedate="${result.effectivedate}"
+            data-sec="${result.sec}"
+            data-resulttype="${result.resulttype}"
+            data-external="${result.external}"
+            data-smode="${result.smode}"
+            >
+        <i class="fas fa-paper-plane fa-sm"></i> Submit to Board
+    </button>
+                                        <form action="../newboardresult.php" method="POST" target="_blank">
+                <input type="hidden" name="degree" value="${result.degree_id}">
+                <input type="hidden" name="field" value="${result.field_id}">
+                <input type="hidden" name="effectivedate" value="${result.effectivedate}">
+                <input type="hidden" name="sec" value="${result.sec}">
+                <input type="hidden" name="resulttype" value="${result.resulttype}">
+                <input type="hidden" name="external" value="${result.external}">
+                <input type="hidden" name="mode" value="${result.smode}">
+                <button type="submit" class="btn-sm success">
+                    <i class="fas fa-eye fa-sm text-white-50"></i> View Result
+                </button>
+            </form>
+                                    </div>
                                     </td>
                                     </tr>`;
                                 });
@@ -582,6 +628,83 @@ $admin = $_SESSION["name"];
 
                     loadUsers(1); // Load the first page of users initially
                 });
+
+
+
+
+$(document).on('click', '.submit-board-btn', function() {
+    const fieldId = $(this).data('field-id');
+    const degreeId = $(this).data('degree-id');
+    const effectiveDate = $(this).data('effectivedate');
+    const sec = $(this).data('sec');
+    const resultType = $(this).data('resulttype');
+    const external = $(this).data('external');
+    const smode = $(this).data('smode');
+    const button = $(this);
+
+    Swal.fire({
+        title: 'Submit for Board?',
+        text: "Are you sure you want to submit this result for board approval?\nOnce submitted, you won't be able to edit the result.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#0a2b4f',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, submit it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Disable button and show loading
+            button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Submitting...');
+
+            // AJAX request to update testscore table
+            $.ajax({
+                url: 'board_submission.php',
+                type: 'POST',
+                data: {
+                    field_id: fieldId,
+                    degree_id: degreeId,
+                    effectivedate: effectiveDate,
+                    sec: sec,
+                    resulttype: resultType,
+                    external: external,
+                    smode: smode,
+                    action: 'submit_for_board'
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire(
+                            'Submitted!',
+                            'Result has been submitted for board approval.',
+                            'success'
+                        );
+                        // Update button to show submitted status
+                        button.removeClass('btn-primary').addClass('btn-success')
+                              .html('<i class="fas fa-check"></i> Submitted')
+                              .prop('disabled', true);
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            response.message || 'Failed to submit result.',
+                            'error'
+                        );
+                        // Re-enable button
+                        button.prop('disabled', false).html('<i class="fas fa-paper-plane fa-sm"></i> Submit for Board');
+                    }
+                },
+                error: function() {
+                    Swal.fire(
+                        'Error!',
+                        'An error occurred while submitting.',
+                        'error'
+                    );
+                    // Re-enable button
+                    button.prop('disabled', false).html('<i class="fas fa-paper-plane fa-sm"></i> Submit for Board');
+                }
+            });
+        }
+    });
+});
             </script>
 
             <footer class="sticky-footer bg-white">

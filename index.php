@@ -1,5 +1,9 @@
 <?php
 ob_start();
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +12,8 @@ ob_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://kit.fontawesome.com/ba46c9c7c0.js" crossorigin="anonymous"></script>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="icon" href="logo.png" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -241,7 +246,7 @@ ob_start();
                 </div>
             </div>
         </div>
-        <?php
+               <?php
         include('function/script.php');
 
         function authenticateUser($username, $password, $conn)
@@ -252,16 +257,13 @@ ob_start();
                 checkExams($username, $password, $conn);
             } elseif ($username == 'BCM') {
                 checkBCM($username, $password, $conn);
+            } elseif ($username == 'IctAdmin') {
+                checkIctAdmin($username, $password, $conn);
             } else {
-                ob_start();
-                checkuser($username, $password, $conn);
-                $output = ob_get_clean();
-                if (strpos($output, 'Login Successful') === false) {
-                    ob_start();
+                // Try checkuser first, if it fails, try checkFacUser
+                if (!checkuser($username, $password, $conn)) {
                     checkFacUser($username, $password, $conn);
-                    $output = ob_get_clean();
                 }
-                echo $output;
             }
         }
 

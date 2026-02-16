@@ -289,7 +289,9 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
 
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -551,7 +553,8 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
 
 
       <li class="nav-item">
-        <form method="post" class=" nav-link"><button class="trash logout" type="submit" name="logout"><i class="fas fa-sign-out-alt"></i>Logout</button></form>
+        <form method="post" class=" nav-link"><button class="trash logout" type="submit" name="logout"><i
+              class="fas fa-sign-out-alt"></i>Logout</button></form>
 
 
       </li>
@@ -611,7 +614,8 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <form method="post" class=" nav-link"><button class="trash logout" type="submit" name="logout"><i class="fas fa-sign-out-alt"></i>Logout</button></form>
+              <form method="post" class=" nav-link"><button class="trash logout" type="submit" name="logout"><i
+                    class="fas fa-sign-out-alt"></i>Logout</button></form>
 
             </li>
 
@@ -627,11 +631,13 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
           <div class="contain">
             <div class="head">
               <h4> Processed Result </h4>
-              <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCourse">
+              <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+                data-toggle="modal" data-target="#addCourse">
                 <i class="fas fa-calendar fa-sm text-white-50"></i> Set Faculty Meeting Date
               </button>
 
-              <div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal fade" id="addCourse" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -647,7 +653,7 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
                     if (isset($_POST['submit'])) {
                       $effective = $_POST['effective'];
                       $facDate = $_POST['facDate'];
-                      setFacultyMeetingDate($effective, $facDate, $conn,$facId);
+                      setFacultyMeetingDate($effective, $facDate, $conn, $facId);
                     }
 
 
@@ -745,14 +751,14 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
 
           <?php if (isset($_SESSION['alert'])): ?>
             <script>
-              document.addEventListener('DOMContentLoaded', function() {
+              document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                   icon: '<?php echo $_SESSION['alert']['type']; ?>',
                   title: '<?php echo $_SESSION['alert']['title']; ?>',
                   text: '<?php echo $_SESSION['alert']['message']; ?>',
                   timer: 2000,
                   showConfirmButton: false
-                }).then(function() {
+                }).then(function () {
                   <?php if (isset($_SESSION['alert']['redirect'])): ?>
                     window.location.href = '<?php echo $_SESSION['alert']['redirect']; ?>';
                   <?php endif; ?>
@@ -773,7 +779,8 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <p>Copyright &copy;<?php echo date("Y"); ?>, University of Ibadan, Postgraduate College. All Rights Reserved.</p>
+            <p>Copyright &copy;<?php echo date("Y"); ?>, University of Ibadan, Postgraduate College. All Rights
+              Reserved.</p>
           </div>
         </div>
       </footer>
@@ -790,7 +797,7 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
   </a>
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       function loadUsers(page) {
         $.ajax({
           url: '../fetch_faculty_result.php',
@@ -799,12 +806,12 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
             page: page
           },
           dataType: 'json',
-          success: function(response) {
+          success: function (response) {
             $('#userTableBody').empty();
             let data = response.data;
             let total_pages = response.total_pages;
             let rows = '';
-            data.forEach(function(result, index) {
+            data.forEach(function (result, index) {
               let stageText, facultyText;
               if (result.facultyDate === null || result.facultyDate === '') {
                 facultyText = '<span class=stage id=stage-error>No Date Assigned</span>';
@@ -838,11 +845,20 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
                                     <td>${stageText}</td>
                                     <td>${facultyText}</td>
                                     <td>
-                                    <a  href='../pdf.php?department=${result.dept_id}&degree=${result.degree_id}&field=${result.field_id}&effectivedate=${result.effectivedate}&sec=${result.sec}&resulttype=${result.resulttype}&external=${result.external}' class='success'>
-                                        <i class="fas fa-download fa-sm text-white-50"></i> Download
-                                      </a>
+                                    <form action="../genboardresult.php" method="POST" target="_blank">
+                <input type="hidden" name="department" value="${result.dept_id}">
+                <input type="hidden" name="degree" value="${result.degree_id}">
+                <input type="hidden" name="field" value="${result.field_id}">
+                <input type="hidden" name="effectivedate" value="${result.effectivedate}">
+                <input type="hidden" name="sec" value="${result.sec}">
+                <input type="hidden" name="resulttype" value="${result.resulttype}">
+                <input type="hidden" name="external" value="${result.external}">
+                <input type="hidden" name="mode" value="${result.smode}">
+                <button type="submit" class="success">
+                    <i class="fas fa-eye fa-sm text-white-50"></i> View Result
+                </button>
+            </form>
                                     </td>
-
                                     <td>
                                     <a  href='index.php?department=${result.dept_id}&degree=${result.degree_id}&field=${result.field_id}&effectivedate=${result.effectivedate}&mode=${result.smode}&sec=${result.sec}&resulttype=${result.resulttype}&external=${result.external}&fac_approve=fac_approve' class='danger'>
                                         <i class="fas fa-check fa-sm text-white-50"></i> Approve
@@ -863,13 +879,13 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
             }
             $('#pagination').html(pagination);
           },
-          error: function(jqXHR, textStatus, errorThrown) {
+          error: function (jqXHR, textStatus, errorThrown) {
             alert("An error occurred while fetching data: " + textStatus + " - " + errorThrown);
           }
         });
       }
 
-      $(document).on('click', '.pagination_link', function(e) {
+      $(document).on('click', '.pagination_link', function (e) {
         e.preventDefault();
         let page = $(this).attr('id');
         loadUsers(page);
@@ -880,7 +896,12 @@ if (isset($_GET['department'], $_GET['degree'], $_GET['mode'], $_GET['field'], $
   </script>
 
 
-
+  <!-- <td>
+    <a href='../pdf.php?department=${result.dept_id}&degree=${result.degree_id}&field=${result.field_id}&effectivedate=${result.effectivedate}&sec=${result.sec}&resulttype=${result.resulttype}&external=${result.external}'
+      class='success'>
+      <i class="fas fa-download fa-sm text-white-50"></i> Download
+    </a>
+  </td> -->
   <!-- Bootstrap core JavaScript-->
   <script src="../vendor/jquery/jquery.min.js"></script>
   <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

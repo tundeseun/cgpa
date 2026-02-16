@@ -1,5 +1,5 @@
 <?php
-require_once 'vendor\autoload.php';
+require_once 'vendor/autoload.php';
 require_once('function/script.php');
 
 $board_date = $_GET['board'];

@@ -169,8 +169,34 @@ $admin = $name_head;
 
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
+      
+      <li class="nav-item ">
         <a class="nav-link" href="../examView">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span>View Results</span></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="http://pguicgpa.ui.edu.ng/nor" target="_blank">
+          <i class="fas fa-file"></i>
+          <span>NOR</span></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="http://192.168.0.15/Notification/" target="_blank">
+          <i class="fas fa-file"></i>
+          <span>Old NOR</span></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="http://pguicgpa.ui.edu.ng/cmdnor" target="_blank">
+          <i class="fas fa-file"></i>
+          <span>CMD NOR</span></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="http://pguicgpa.ui.edu.ng/rendition" target="_blank">
+          <i class="fas fa-file"></i>
+          <span>Rendition</span></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="../examApprovedResult">
           <i class="fas fa-chalkboard-teacher"></i>
           <span>View Approved Result</span></a>
       </li>
@@ -188,8 +214,23 @@ $admin = $name_head;
       <li class="nav-item active">
         <a class="nav-link" href="#">
           <i class="fas fa-chalkboard-teacher"></i>
-          <span>View Senate List</span></a>
+          <span>View M.Sc Senate List</span></a>
       </li>
+      <!-- <li class="nav-item ">
+        <a class="nav-link" href="../examSenateListPhd">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span>View PhD Senate List</span></a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="../examCertList">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span>View M.Sc Cert. List</span></a>
+      </li>
+      <!-- <li class="nav-item ">
+        <a class="nav-link" href="../examCertListPhd">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <span>View PhD Cert. List</span></a>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" href="../examOrder">
           <i class="fas fa-download"></i>

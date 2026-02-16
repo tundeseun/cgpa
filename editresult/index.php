@@ -66,7 +66,9 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
 
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -207,17 +209,19 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
     .s {
       width: 2rem !important;
     }
-    .hiddenBtn{
+
+    .hiddenBtn {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: flex-end;
     }
 
-    .formtohide{
+    .formtohide {
       display: none;
     }
-    .formtoshow{
+
+    .formtoshow {
       display: block;
     }
   </style>
@@ -251,29 +255,29 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800"><?php if (isset($dept)) {
-                                                showdept($dept, $conn);
-                                              }  ?></h1>
-            
+              showdept($dept, $conn);
+            } ?></h1>
+
           </div>
 
           <div id="form" class="contain">
-            
-            
-            <form class="formtoshow" method="post" enctype="multipart/form-data">
-            <div class="hiddenBtn">
 
-<a class="link" type="button" onclick="toggleForms(event)">Edit With Course Code</a>
-</div>
+
+            <form class="formtoshow" method="post" enctype="multipart/form-data">
+              <div class="hiddenBtn">
+
+                <a class="link" type="button" onclick="toggleForms(event)">Edit With Course Code</a>
+              </div>
               <!-- <div class="form-group">
                 <label for="programme">Select Course:</label>
                 <select name="coz">
                   <?php //showcourse2($conn,$dept);
-                            ?>
+                  ?>
                             </select>
                             
                           </div> -->
-                          
-                          <h4> Edit Student Result With Matric Number</h4>
+
+              <h4> Edit Student Result With Matric Number</h4>
               <div class="form-group">
 
                 <label for="matric">Enter Matric Number:</label>
@@ -293,7 +297,7 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
                   while ($row = mysqli_fetch_assoc($result)) {
 
 
-                  ?>
+                    ?>
 
                     <option value="<?php echo $row['effectivedate']; ?>"><?php echo $row['effectivedate']; ?></option>
                   <?php } ?>
@@ -306,36 +310,39 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
               <!-- <input type='submit' value='Submit' name='send' class='btn'> -->
             </form>
             <form class="formtohide" method="post" enctype="multipart/form-data">
-            <div class="hiddenBtn">
+              <div class="hiddenBtn">
 
-<a class="link" type="button" onclick="toggleForms(event)">Edit With Matric Number</a>
-</div>
+                <a class="link" type="button" onclick="toggleForms(event)">Edit With Matric Number</a>
+              </div>
               <!-- <div class="form-group">
                 <label for="programme">Select Course:</label>
                 <select name="coz">
                   <?php //showcourse2($conn,$dept);
-                            ?>
+                  ?>
                             </select>
                             
                           </div> -->
-                          
-                          <h4> Edit Student Result With Course Code</h4>
+
+              <h4> Edit Student Result With Course Code</h4>
               <div class="form-group">
 
                 <label for="code">Enter Course Code:</label>
                 <select id="code" name="code">
                   <option value="">Select Course Code</option>
                   <?php
-
-                  $query2 = "SELECT DISTINCT testscore.cozid,course_new.course_code FROM testscore INNER JOIN course_new ON course_new.id=testscore.cozid WHERE dept = '$dept'";
-                  $result2 = mysqli_query($conn, $query2);
-                  while ($row2 = mysqli_fetch_assoc($result2)) {
-
-
+                  $query_course = "SELECT DISTINCT testscore.cozid, course_new.course_code, testscore.cstatus, testscore.cunit, field_new.field_title 
+FROM testscore 
+INNER JOIN course_new ON course_new.id = testscore.cozid 
+INNER JOIN field_new ON field_new.id = testscore.field
+WHERE testscore.dept = '$dept' 
+AND testscore.status = 0 
+AND course_new.status2 = 0
+ORDER BY course_new.course_code";
+                  $result_course = mysqli_query($conn, $query_course);
+                  while ($row_course = mysqli_fetch_assoc($result_course)) {
+                    echo "<option value='{$row_course['cozid']}'>{$row_course['course_code']} - {$row_course['cstatus']} - {$row_course['cunit']}  - {$row_course['field_title']}</option>";
+                  }
                   ?>
-
-                    <option value="<?php echo $row2['cozid']; ?>"><?php echo $row2['course_code']; ?></option>
-                  <?php } ?>
                 </select>
 
               </div>
@@ -352,7 +359,7 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
                   while ($row = mysqli_fetch_assoc($result)) {
 
 
-                  ?>
+                    ?>
 
                     <option value="<?php echo $row['effectivedate']; ?>"><?php echo $row['effectivedate']; ?></option>
                   <?php } ?>
@@ -424,7 +431,8 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <p>Copyright &copy;<?php echo date("Y"); ?>, University of Ibadan, Postgraduate College. All Rights Reserved.</p>
+            <p>Copyright &copy;<?php echo date("Y"); ?>, University of Ibadan, Postgraduate College. All Rights
+              Reserved.</p>
           </div>
         </div>
       </footer>
@@ -440,18 +448,18 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
     <i class="fas fa-angle-up"></i>
   </a>
 
-<script>
-function toggleForms() {
-  var formToShow = document.querySelector('.formtohide');
-  var formToHide = document.querySelector('.formtoshow');
+  <script>
+    function toggleForms() {
+      var formToShow = document.querySelector('.formtohide');
+      var formToHide = document.querySelector('.formtoshow');
 
-  formToHide.classList.add('formtohide');
-  formToHide.classList.remove('formtoshow');
+      formToHide.classList.add('formtohide');
+      formToHide.classList.remove('formtoshow');
 
-  formToShow.classList.add('formtoshow');
-  formToShow.classList.remove('formtohide');
-}
-</script>
+      formToShow.classList.add('formtoshow');
+      formToShow.classList.remove('formtohide');
+    }
+  </script>
 
 
 

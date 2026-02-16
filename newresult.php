@@ -175,8 +175,9 @@ $degree=$_POST['degree'];
 $effectivedate=$_POST['effectivedate'];
 $external=$_POST['external'];
 $resulttype=$_POST['resulttype'];
+$mode=$_POST['mode'];
 resultheader($conn,$dept,$field,$degree,$sec,$effectivedate,$external,$resulttype);
-processresult($conn,$field,$effectivedate,$external,$dept,$resulttype);
+processresult($conn,$field,$effectivedate,$external,$dept,$resulttype,$mode,$degree);
 
 ?>
 

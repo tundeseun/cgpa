@@ -247,7 +247,7 @@ $admin = $_SESSION["name"];
             display: none !important; 
         }
     </style>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body id="page-top">
@@ -293,7 +293,7 @@ include('../menu/menu.php');
 // include('function/script.php');
     $result = getStudentResultsWithCode($conn,$code,$effectivedate,$dept);
 
-    $querycode = "SELECT DISTINCT course_code FROM course_new WHERE cgpa_id = '$code'";
+    $querycode = "SELECT DISTINCT course_code FROM course_new WHERE id = '$code'";
     $resultcode = mysqli_query($conn, $querycode);
 
     $row_name = mysqli_fetch_assoc($resultcode);
@@ -319,8 +319,7 @@ include('../menu/menu.php');
                 <th>Matric</th>
                 <th>Name</th>
                 <th class="s"> Score</th>
-
-
+                <th>Action</th>
               </tr>
 <?php
 
@@ -329,6 +328,7 @@ include('../menu/menu.php');
         $matric = $row['matric'];
         $score = $row['score'];
         $name = $row['name'];
+        $id = $row['id'];
         
         
 
@@ -353,6 +353,12 @@ include('../menu/menu.php');
                     <input type="number" name="sections[<?php echo $i;?>][score]" class="score" value="<?php echo $score;?>">
                     <input type="number" name="sections[<?php echo $i;?>][scoreHide]" class="scoreHide" id="scoreHide" >
                     
+                  </td>
+                  <td>
+                    <button type="button" class="delete-btn btn btn-danger btn-sm" 
+                            onclick="confirmDelete('<?php echo $id; ?>', '<?php echo $matric; ?>', '<?php echo $effectivedate; ?>')">
+                        <i class="fas fa-trash"></i>
+                    </button>
                   </td>
                 <tr>
                   
@@ -441,6 +447,68 @@ include('../menu/menu.php');
   <!-- Page level custom scripts -->
   <script src="../js/demo/chart-area-demo.js"></script>
   <script src="../js/demo/chart-pie-demo.js"></script>
+
+  <script>
+function confirmDelete(id, matric, effectivedate) {
+    // Store the button and row reference
+    const button = event.currentTarget;
+    const row = $(button).closest('tr');
+    
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: 'delete_result.php',
+                type: 'POST',
+                data: {
+                    id: id,
+                    matric: matric,
+                    effectivedate: effectivedate
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if(response.success) {
+                        // Remove the row using jQuery
+                        row.fadeOut(400, function() {
+                            $(this).remove();
+                        });
+                        
+                        Swal.fire(
+                            'Deleted!',
+                            'Record has been deleted.',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Failed to delete record.',
+                            'error'
+                        );
+                    }
+                },
+                error: function() {
+                    Swal.fire(
+                        'Error!',
+                        'Something went wrong.',
+                        'error'
+                    );
+                }
+            });
+        }
+    });
+}
+
+
+
+
+  </script>
 
 </body>
 

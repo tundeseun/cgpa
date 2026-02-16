@@ -189,7 +189,6 @@ div.transparentbox p
 </head>
 <body >
 <div >
-<div style=opacity:0.7;background:url(images/draft2.png);background-repeat:no-repeat;background-position:center; class='transparentbox'>
 
 ";
 
@@ -203,7 +202,7 @@ $html .= processResultPDF($conn,$field,$effectivedate,$external,$dept,$resulttyp
 
 
 
-$html .= "</div></div>
+$html .= "</div>
 </body>
 </html>
 ";

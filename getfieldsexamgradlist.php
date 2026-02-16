@@ -18,7 +18,7 @@ $query = "SELECT * FROM dept_new where id='$q'";
 
     echo "<div class='form-group'>";
 echo"<label for='degree' >Select Degree:</label>";
-    echo"<select name=degree id=degree >";
+    echo"<select name=degree id=degree required>";
     $query = "SELECT DISTINCT testscore.degree as id,degree_new.degree as degree FROM testscore inner join degree_new on degree_new.id=testscore.degree where testscore.dept='$q'";
     //echo "$query <br>";
 $result = mysqli_query($conn,$query) or die(mysqli_error($conn));
@@ -36,7 +36,7 @@ echo "</div>";
 
 echo "<div class='form-group'>";
 echo"<label for='field' >Select Specialization:</label>";
-     echo"<select name='field' id='field' >";
+     echo"<select name='field' id='field' required>";
      
      
      $query = "SELECT DISTINCT testscore.field as id,field_new.field_title as field FROM testscore inner join field_new on field_new.id=testscore.field where testscore.dept='$q'";
@@ -58,7 +58,7 @@ echo "<option value= selected disabled>";
  echo "<div class='form-group mb'>";
  echo "<label for='date'>Select Effective Date:</label>";
 
- echo"<select name='effectivedate' id='effectivedate' >";
+ echo"<select name='effectivedate' id='effectivedate' required>";
      
  $query = "SELECT DISTINCT effectivedate FROM testscore WHERE dept = '$q'";
     $result = mysqli_query($conn, $query);
@@ -77,7 +77,7 @@ echo "</div>";
  echo "<div class='form-group mb'>";
  echo "<label for='sec'>Session of Graduation:</label>";
 
- echo"<select name='sec' id='sec' >";
+ echo"<select name='sec' id='sec' required>";
      
  $query = "SELECT DISTINCT session_of_grad FROM testscore WHERE dept = '$q'";
     $result = mysqli_query($conn, $query);
@@ -87,6 +87,22 @@ echo "</div>";
         $options .= '<option value="'.$row['session_of_grad'].'">'.$row['session_of_grad'].'</option>';
     }
 
+    echo $options;
+
+echo"</select>";     
+echo "</div>";
+ 
+
+echo "<div class='form-group mb'>";
+ echo "<label for='resulttype'>Session of Graduation:</label>";
+
+ echo"<select name='resulttype' id='resulttype' required>";
+     
+
+
+    $options = '<option value="" selected disabled>Select Result Type</option>';
+    $options .= '<option value="0">Main</option>';
+    $options .= '<option value="1">Supplementary</option>';
     echo $options;
 
 echo"</select>";     

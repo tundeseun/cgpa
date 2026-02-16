@@ -45,7 +45,7 @@
       <li class="nav-item">
         <a class="nav-link" href="../dashboard.php?p=viewcourse">
           <i class="fas fa-fw fa-chart-area"></i>
-          <span>View Course</span></a>
+          <span>View Course(s)</span></a>
       </li>
 
        <!-- Nav Item - Charts -->
@@ -76,7 +76,12 @@
           <i class="fas fa-fw fa-table"></i>
           <span>Edit Result</span></a>
       </li>
-
+      
+      <li class="nav-item">
+        <a class="nav-link" href="../dashboard.php?p=deleteresult">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Delete Result (Bulk)</span></a>
+      </li>
       
       <li class="nav-item">
         <a class="nav-link" href="../dashboard.php?p=setupresolve">
@@ -104,6 +109,10 @@
             <a class="collapse-item" href="../dashboard.php?p=setupdraft">Draft Result</a>
             <a class="collapse-item" href="../dashboard.php?p=graduating">Graduating List (PDF)</a>
             <a class="collapse-item" href="../dashboard.php?p=regstatus">Registration Status (PDF)</a>
+            
+            <hr>
+            <!-- <a class="collapse-item" href="../dashboard.php?p=graduating-word">Graduating List (WORD)</a> -->
+            <!-- <a class="collapse-item" href="../dashboard.php?p=regstatus-word">Registration Status (WORD)</a> -->
           </div>
         </div>
       </li>

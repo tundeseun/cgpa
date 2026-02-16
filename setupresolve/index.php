@@ -105,6 +105,13 @@ if(isset($_POST['logout'])){
     overflow: auto;
     
 }
+      .containTable{
+    margin: auto;
+    max-width: 1000px;
+    padding: 1rem;
+    overflow: auto;
+    
+}
       
        #form form .btn {
             background: #dc3545;
@@ -212,7 +219,7 @@ include('../menu/menu.php');
 
                     <?php
 if (isset($_POST['upexcel'])) {
-  echo "<div  class='contain'>";
+  echo "<div  class='containTable'>";
   echo "<form method='post' enctype='multipart/form-data'>";
   echo " <table class='table cmt' id='myTable'>
                           
@@ -221,8 +228,13 @@ if (isset($_POST['upexcel'])) {
                                            
                                            <th>Name</th>
                                            
+                                           <th>Degree</th>
+
+                                           <th >Select New Degree</th>
+                                           
                                            <th>Specialization</th>
                                            
+
                                            <th colspan=2>Select New Specialization</th>
                                        </tr>
                                    ";
@@ -271,12 +283,15 @@ var selectElements = document.querySelectorAll('.data');
 selectElements.forEach(function(selectElement) {
     // Find the elements within the current set
     var fieldSelect = selectElement.querySelector('.field');
+    var degreeSelect = selectElement.querySelector('.degree');
     var matricInput = selectElement.querySelector('.matric');
     var responseDiv = selectElement.querySelector('.responseDiv');
+    var responseDiv2 = selectElement.querySelector('.responseDiv2');
 
     // Add change event listener to the field select element
     fieldSelect.addEventListener('change', function() {
         var field = this.value;
+        
         var matric = matricInput.value;
         
         var xhttp = new XMLHttpRequest();
@@ -288,6 +303,23 @@ selectElements.forEach(function(selectElement) {
             }
         };
         xhttp.open("GET", "../resolvefield.php?field=" + field + "&matric=" + matric, true);
+        xhttp.send();
+    });
+    // Add change event listener to the degree select element
+    degreeSelect.addEventListener('change', function() {
+        var degree = this.value;
+        
+        var matric = matricInput.value;
+        
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Response from PHP script
+                var successMessage = this.responseText;
+                responseDiv2.innerHTML = successMessage;
+            }
+        };
+        xhttp.open("GET", "../resolvefield.php?degree=" + degree + "&matric=" + matric, true);
         xhttp.send();
     });
 });

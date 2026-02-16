@@ -7,7 +7,7 @@ $limit = 20;
 $page = isset($_POST['page']) ? $_POST['page'] : 1;
 $start_from = ($page - 1) * $limit;
 
-$queryDisplay = "SELECT * FROM users_cgpa_new LIMIT $start_from, $limit";
+$queryDisplay = "SELECT * FROM users_cgpa_new ORDER BY id DESC LIMIT $start_from, $limit";
 $result = mysqli_query($conn, $queryDisplay);
 
 $data = array();

@@ -317,34 +317,7 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
               </div>
             </div>
 
-            <div id="form" class="contain">
-            <h4> Processed Result </h4>
-
-<table class="table cmt" id="myTable">
-
-  <thead>
-
-    <tr>
-      <th>S/N</th>
-      <th> Specialization</th>
-      <th> Result Type</th>
-      <th> Stage</th>
-      <th> View Result</th>
-
-
-    </tr>
-  </thead>
-
-  <tbody id="userTableBody">
-
-  </tbody>
-
-</table>
-
-<div id="pagination">
-  <!-- Pagination links will be loaded here -->
-</div>
-            </div>
+           
 
           </div>
 
@@ -413,8 +386,9 @@ if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
                 <td>${result.resultT}</td>
                 <td>${result.resultT}</td>
                 <td>
-                <a target ='_blank' href='../ProcessedBoardResult/${result.faculty}/${result.department}/${result.specialization}/${result.resultT}/BroadSheet.pdf' class='success'><i class="fas fa-eye fa-sm text-white-50"></i> View</a>
-
+                <a  href='../pdf.php?degree=${result.degree_id}&field=${result.field_id}&effectivedate=${result.effectivedate}&sec=${result.sec}&resulttype=${result.resulttype}&external=${result.external}' class='success'>
+                      <i class="fas fa-download fa-sm text-white-50"></i> Download
+                    </a>
                 </td>
               </tr>`;
             });

@@ -201,6 +201,16 @@ $admin = $_SESSION["name"];
 
                 </select>
               </div>
+
+              <div class="form-group">
+                                <label for="resulttype">Select Result Type:</label>
+                                <select id="resulttype" name="resulttype">
+                                    <option value="" selected>Select Result Type</option>
+                                    <option value="0">Main Result</option>
+                                    <option value="1">Supplementary Result</option>
+                                    <!-- Options will be populated dynamically using AJAX -->
+                                </select>
+                            </div>
               <input type='submit' value='Download' name='send' class='btn'>
 
 

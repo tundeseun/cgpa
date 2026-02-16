@@ -1,19 +1,53 @@
 <?php session_start();
-$dept = $_SESSION["dept_new"];
-$name = $_SESSION["name"];
-include_once('../function/script.php');
+    $dept = $_SESSION["dept_new"];
+    // echo $dept;
+    $name = $_SESSION["name"];
+    include_once '../function/script.php';
 
-if (!isset($_SESSION["dept_new"]) && !isset($_SESSION["name"])) {
-    session_destroy();
-    header('Location: ../');
-}
+    if (! isset($_SESSION["dept_new"]) && ! isset($_SESSION["name"])) {
+        session_destroy();
+        header('Location: ../');
+    }
 
-if (isset($_POST['logout'])) {
-    session_destroy();
-    header('Location: ../');
-}
+    if (isset($_POST['logout'])) {
+        session_destroy();
+        header('Location: ../');
+    }
 
-$admin = $_SESSION["name"];
+    $admin = $_SESSION["name"];
+
+    // Query to count HODs with the given status and department
+    $queryeCount  = "SELECT COUNT(status) AS NumberOfEnable FROM hod_cgpa WHERE status = 0 AND dept_new = $dept";
+    $resulteCount = mysqli_query($conn, $queryeCount);
+
+    // Check query execution and fetch result
+    if ($resulteCount) {
+        $row   = mysqli_fetch_assoc($resulteCount);
+        $count = $row['NumberOfEnable'];
+
+        // If no HOD is enabled
+        if ($count == 0) {
+            // Pass data to JavaScript
+            echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'No HOD Found',
+                    text: 'Please enable an HOD to proceed.',
+                    icon: 'warning',
+                    allowOutsideClick: false,
+                    showCancelButton: false,
+                    confirmButtonText: 'Go to Hod Page'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '../dashboard.php?p=hod';
+                    }
+                });
+            });
+        </script>";
+        }
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -149,7 +183,7 @@ $admin = $_SESSION["name"];
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?php include('../menu/menu.php'); ?>
+        <?php include '../menu/menu.php'; ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -159,7 +193,7 @@ $admin = $_SESSION["name"];
             <div id="content">
 
                 <!-- Topbar -->
-                <?php include('../navbar/nav.php'); ?>
+                <?php include '../navbar/nav.php'; ?>
 
 
                 <div class="container-fluid">
@@ -167,8 +201,8 @@ $admin = $_SESSION["name"];
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800"><?php if (isset($dept)) {
-                                                                showdept($dept, $conn);
-                                                            }  ?></h1>
+                                                              showdept($dept, $conn);
+                                                          }?></h1>
 
                     </div>
 
@@ -217,20 +251,12 @@ $admin = $_SESSION["name"];
                                     <!-- Options will be populated dynamically using AJAX -->
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="mode">Mode of Study:</label>
-                                <select id="mode" name="mode">
-                                    <option value="" selected>Select Mode of Study</option>
-                                    <option value="1">Full-Time</option>
-                                    <option value="0">Part-Time</option>
-                                    <!-- Options will be populated dynamically using AJAX -->
-                                </select>
-                            </div>
+
                             <div class="form-group">
                                 <label for="sec">Session of Graduation:</label>
                                 <select id="sec" name="sec">
                                     <option value="">Select Session</option>
-                                    <?php include_once("function/connect.php");
+                                    <?php include_once "function/connect.php";
                                     showsessionexamined2($conn); ?>
                                 </select>
                             </div>
@@ -243,23 +269,20 @@ $admin = $_SESSION["name"];
 
 
                     <?php
-                    if (isset($_POST['send'])) {
-                        $degree = $_POST['degree'];
-                        $field = $_POST['field'];
-                        $effectivedate = $_POST['effectivedate'];
-                        $external = $_POST['external'];
-                        $resulttype = $_POST['resulttype'];
-                        $sec = $_POST['sec'];
-                        $mode = $_POST['mode'];
+                        if (isset($_POST['send'])) {
+                            $degree        = $_POST['degree'];
+                            $field         = $_POST['field'];
+                            $effectivedate = $_POST['effectivedate'];
+                            $external      = $_POST['external'];
+                            $resulttype    = $_POST['resulttype'];
+                            $sec           = $_POST['sec'];
+
+                            $status = processResultReal($conn, $dept, $degree, $field, $effectivedate, $external, $resulttype, $sec);
+                            if ($status === "Success") {
+
+                                echo "<script>
 
 
-
-                        $status = processResultReal($conn, $dept, $degree, $field, $effectivedate, $external, $resulttype, $sec, $mode);
-                        if ($status === "Success") {
-
-                            echo "<script>
-    
-    
     // Check if the page has already reloaded
     if (!localStorage.getItem('reloaded')) {
         Swal.fire({
@@ -278,17 +301,17 @@ $admin = $_SESSION["name"];
         localStorage.removeItem('reloaded');
     }
 </script>";
-                        } else  if ($status === "Error") {
+                            } else if ($status === "Error") {
 
-                            echo "<script>
+                                echo "<script>
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'The Result has been Locked'
+                        text: 'No Record Or The Result has been Locked'
                     });
                 </script>";
+                            }
                         }
-                    }
 
                     ?>
 

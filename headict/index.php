@@ -81,7 +81,9 @@ if (isset($_GET['status'])) {
 
   <!-- Custom fonts for this template-->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <!-- Custom styles for this template-->
@@ -239,7 +241,7 @@ if (isset($_GET['status'])) {
 
     }
 
-    
+
 
     .success {
       padding: 0.2rem 1rem;
@@ -290,6 +292,32 @@ if (isset($_GET['status'])) {
       background: #0a2b4f;
       color: #fff;
     }
+
+    .pagination_link_active {
+      background: #0a2b4f;
+      color: #fff;
+}
+
+    .ser {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    .ser input {
+
+      border-radius: 0.4rem;
+
+      border-radius: 0.4rem;
+      width: 50% !important;
+      outline: none;
+      border: 1px solid #0a2b4f;
+      text-align: center;
+      height: 2.6rem !important;
+
+    }
   </style>
 
 </head>
@@ -308,7 +336,8 @@ if (isset($_GET['status'])) {
         <div class="sidebar-brand-icon">
           <i class="fas fa-fw fa-user"></i>
         </div>
-        <div class="sidebar-brand-text mx-3"><?php echo $name_head;; ?></div>
+        <div class="sidebar-brand-text mx-3"><?php echo $name_head;
+        ; ?></div>
       </a>
 
 
@@ -329,7 +358,8 @@ if (isset($_GET['status'])) {
           <span>Add Section</span></a>
       </li>
       <li class="nav-item">
-        <form method="post" class=" nav-link"><button class="trash logout" type="submit" name="logout"><i class="fas fa-sign-out-alt"></i>Logout</button></form>
+        <form method="post" class=" nav-link"><button class="trash logout" type="submit" name="logout"><i
+              class="fas fa-sign-out-alt"></i>Logout</button></form>
 
 
       </li>
@@ -387,7 +417,8 @@ if (isset($_GET['status'])) {
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <form method="post" class=" nav-link"><button class="trash logout" type="submit" name="logout"><i class="fas fa-sign-out-alt"></i>Logout</button></form>
+              <form method="post" class=" nav-link"><button class="trash logout" type="submit" name="logout"><i
+                    class="fas fa-sign-out-alt"></i>Logout</button></form>
 
             </li>
 
@@ -403,12 +434,14 @@ if (isset($_GET['status'])) {
             <h1 class="h3 mb-0 text-gray-800">Create User (PG Coordinator)</h1>
 
             <!-- Button trigger modal -->
-            <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addHod">
+            <button type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal"
+              data-target="#addHod">
               <i class="fas fa-plus fa-sm text-white-50"></i> Add User
             </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="addHod" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="addHod" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+              aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -449,7 +482,7 @@ if (isset($_GET['status'])) {
                           while ($rowDept = mysqli_fetch_assoc($queryDept)) {
 
 
-                          ?>
+                            ?>
                             <option value="<?php echo $rowDept['id']; ?>">
                               <?php echo $rowDept['department']; ?>
                             </option>
@@ -479,6 +512,16 @@ if (isset($_GET['status'])) {
 
 
           <div class="contain">
+
+            <form method="post">
+
+              <div class="form-group ser">
+                <input type="text" class="" id="myInput" onkeyup="myFunction()" placeholder="Search By Department"
+                  aria-label="Search">
+
+              </div>
+            </form>
+
             <table class="table cmt" id="myTable">
 
               <thead>
@@ -514,6 +557,63 @@ if (isset($_GET['status'])) {
 
         </div>
 
+        <div class="modal fade" id="editHod" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <form action="" method="post" class="forms">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalCenterTitle">Edit User</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" name="Eid" id="Eid">
+                  <div class="form-group">
+                    <label for="Ename">Name:</label>
+                    <input type="text" name="Ename" id="Ename" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="Eusername">Username:</label>
+                    <input type="text" name="Eusername" id="Eusername" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="Epassword">Password:</label>
+                    <input type="text" name="Epassword" id="Epassword" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="currentDepartment">Currently Saved Department:</label>
+                    <input type="text" id="currentDepartment" class="form-control" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Select Department Again:&nbsp;<span class="note">(please confirm
+                        department)</span></label>
+                    <select id="title" name="Edepartment" class="form-control">
+
+                      <?php
+                      $queryDept = getDepartment($conn);
+                      while ($rowDept = mysqli_fetch_assoc($queryDept)) {
+
+
+                        ?>
+                        <option value="<?php echo $rowDept['id']; ?>">
+                          <?php echo $rowDept['department']; ?>
+                        </option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  <input type="submit" value="Submit" class="btn btn-primary" name="edit">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
 
 
 
@@ -521,7 +621,8 @@ if (isset($_GET['status'])) {
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <p>Copyright &copy;<?php echo date("Y"); ?>, University of Ibadan, Postgraduate College. All Rights Reserved.</p>
+            <p>Copyright &copy;<?php echo date("Y"); ?>, University of Ibadan, Postgraduate College. All Rights
+              Reserved.</p>
           </div>
         </div>
       </footer>
@@ -538,78 +639,115 @@ if (isset($_GET['status'])) {
   </a>
 
   <script>
-    document.querySelectorAll('#modalB').forEach(function(button) {
-      button.addEventListener('click', function() {
+    function myFunction() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
 
-        var name = this.getAttribute('data-name');
-        document.getElementById('name').value = name;
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
 
-        var username = this.getAttribute('data-username');
-        document.getElementById('username').value = username;
+        if (td) {
+          txtValue = td.textContent || td.innerText;
 
-        var pass = this.getAttribute('data-password');
-        document.getElementById('pass').value = pass;
-
-        var id = this.getAttribute('data-id');
-        document.getElementById('modalUser').value = id;
-
-        var dept = this.getAttribute('data-dept');
-        document.getElementById('dept').value = dept;
-
-
-      });
-    });
+          if ((txtValue.toUpperCase().indexOf(filter) > -1)) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
   </script>
 
-
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       function loadUsers(page) {
         $.ajax({
           url: '../fetch_users.php',
           method: 'POST',
-          data: {
-            page: page
-          },
+          data: { page: page },
           dataType: 'json',
-          success: function(response) {
+          success: function (response) {
             $('#userTableBody').empty();
             let data = response.data;
             let total_pages = response.total_pages;
             let rows = '';
-            data.forEach(function(user, index) {
+
+            data.forEach(function (user, index) {
               rows += `<tr>
-                <td>${index + 1 + (page - 1) * 10}</td>
-                <td>${user.name}</td>
-                <td>${user.department_name}</td>
-                <td>
-                  <button type="button" class="success" id="modalB" data-toggle="modal" data-target="#editHod" data-name="${user.name}" data-id="${user.id}" data-username="${user.username}" data-password="${user.password}" data-dept="${user.department_name}">Edit</button>
-                </td>
-                <td>
-                  ${user.status == 0 ? `<a href='../headict.php?user=${user.username}&user_id=${user.id}&status=${user.status}' class='danger'>Disable</a>` : `<a href='../headict.php?user=${user.username}&user_id=${user.id}&status=${user.status}' class='success'>Enable</a>`}
-                </td>
-              </tr>`;
+              <td>${index + 1 + (page - 1) * 10}</td>
+              <td>${user.name}</td>
+              <td>${user.department_name}</td>
+              <td>
+                <button type="button" class="success editUserBtn" 
+                  data-toggle="modal" 
+                  data-target="#editHod" 
+                  data-id="${user.id}" 
+                  data-name="${user.name}" 
+                  data-username="${user.username}" 
+                  data-password="${user.password}" 
+                  data-department="${user.department_name}">Edit</button>
+              </td>
+              <td>
+                ${user.status == 0
+                  ? `<a href='../headict.php?user=${user.username}&user_id=${user.id}&status=${user.status}' class='danger'>Disable</a>`
+                  : `<a href='../headict.php?user=${user.username}&user_id=${user.id}&status=${user.status}' class='success'>Enable</a>`}
+              </td>
+            </tr>`;
             });
+
             $('#userTableBody').html(rows);
 
             let pagination = '';
             for (let i = 1; i <= total_pages; i++) {
-              pagination += `<a href="#" class="pagination_link" id="${i}">${i}</a> `;
+              pagination += `<a href="#" class="pagination_link ${i === page ? 'pagination_link_active' : ''}" id="${i}">${i}</a> `;
             }
             $('#pagination').html(pagination);
-          }
+          },
         });
       }
 
-      $(document).on('click', '.pagination_link', function(e) {
+      // Load user data when page loads
+      loadUsers(1);
+
+      // Pagination click event
+      $(document).on('click', '.pagination_link', function (e) {
         e.preventDefault();
-        let page = $(this).attr('id');
+        let page = parseInt($(this).attr('id'), 10);
+
+        // Remove 'active' class from all pagination links
+        $('.pagination_link').removeClass('active');
+
+        // Add 'active' class to the clicked link
+        $(this).addClass('active');
+
+        // Load the users for the selected page
         loadUsers(page);
       });
 
-      loadUsers(1); // Load the first page of users initially
+      // Populate modal on Edit button click
+      $(document).on('click', '.editUserBtn', function () {
+        const userId = $(this).data('id');
+        const userName = $(this).data('name');
+        const userUsername = $(this).data('username');
+        const userPassword = $(this).data('password');
+        const userDepartment = $(this).data('department');
+
+        $('#editHod #Eid').val(userId);
+        $('#editHod #Ename').val(userName);
+        $('#editHod #Eusername').val(userUsername);
+        $('#editHod #Epassword').val(userPassword);
+        $('#editHod #currentDepartment').val(userDepartment);
+      });
     });
   </script>
+
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="../vendor/jquery/jquery.min.js"></script>

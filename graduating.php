@@ -11,6 +11,7 @@ $sec = $_GET['sec'];
 $field = $_GET['field'];
 $degree = $_GET['degree'];
 $effectivedate = $_GET['effectivedate'];
+$resulttype = $_GET['resulttype'];
 
 
 
@@ -176,9 +177,9 @@ div.transparentbox p
 
 ";
 
-$html .= GradListHeaderPDF($conn, $dept, $field, $degree, $sec);
+$html .= GradListHeaderPDF($conn, $dept, $field, $degree, $sec, $resulttype);
 
-$html .= processGradutingList($conn, $field, $effectivedate, $dept);
+$html .= processGradutingList($conn, $field, $effectivedate, $dept, $degree, $resulttype);
 
 
 

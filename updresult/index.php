@@ -43,7 +43,7 @@ $admin = $_SESSION["name"];
 
                     if ($score != '') {
   
-                    $update_result = "UPDATE testscore SET score = '$score' WHERE cozid = '$cid' AND matric = '$matric' AND effectivedate = '$effectivedate'";
+                    $update_result = "UPDATE testscore SET score = '$score' WHERE id = '$cid' AND matric = '$matric' AND effectivedate = '$effectivedate'";
                     $result_update = mysqli_query($conn, $update_result);
 
                     }
@@ -226,6 +226,18 @@ $admin = $_SESSION["name"];
            
 
         }
+        .link2, .link2:hover {
+            background: #0a2b4f;
+            border-radius: 0.2rem;
+            transition: 0.3s ease-in-out !important;
+           color: #fff;
+           font-weight: bolder;
+           width: fit-content !important;
+           padding-left: 0.5rem !important;
+           padding-right: 0.5rem !important;
+           
+
+        }
   #form form .btn:hover {
             background: #0a2b4f;
             border: 1px solid #0a2b4f !important;
@@ -245,7 +257,16 @@ $admin = $_SESSION["name"];
         .scoreHide,.hideCid{
             display: none !important; 
         }
+
+        .head-buttons{
+            display: flex;
+            justify-content: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
     </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -307,7 +328,10 @@ $result_name = mysqli_query($conn, $query_name);
     
     ?>
    
-    <a class="link" href="../dashboard.php?p=editresult"><i class="fas fa-fw fa-arrow-left"></i>Back</a>
+   <div class="head-buttons">
+       <a class="link" href="../dashboard.php?p=editresult"><i class="fas fa-fw fa-arrow-left"></i>Back</a>
+       <a class="link2" href="update_cozid.php" style="margin-left: 0.5rem;"><i class="fas fa-fw fa-exchange-alt"></i>Update Course</a>
+   </div>
 
     <h3 class="name"><?php echo $name_std.' Results' ?></h3>
     <form method="post" enctype="multipart/form-data">
@@ -319,8 +343,7 @@ $result_name = mysqli_query($conn, $query_name);
                 <th> Status</th>
                 <th> Unit</th>
                 <th class="s"> Score</th>
-
-
+                <th>Action</th>
               </tr>
 <?php
 
@@ -331,6 +354,7 @@ $result_name = mysqli_query($conn, $query_name);
         $unit = $row['cunit'];
         $score = $row['score'];
         $cozid = $row['cozid'];
+        $id = $row['id'];
         
 
         // echo $name.' '.$course_code.' '.$status.' '.$unit.' '.$score.'<br><br><br>';
@@ -339,7 +363,7 @@ $result_name = mysqli_query($conn, $query_name);
   <tr>
     <td class="hideCid">
 
-                  <input type="text" id="cid"class="cid" name="sections[<?php echo $i;?>][cid]" value="<?php echo $cozid;?>" readonly>
+                  <input type="text" id="cid"class="cid" name="sections[<?php echo $i;?>][cid]" value="<?php echo $id;?>" readonly>
     </td>
                   <td>
                         <input type="text" id="code"class="code" name="sections[<?php echo $i;?>][code]" value="<?php echo $course_code;?>" readonly>
@@ -357,6 +381,12 @@ $result_name = mysqli_query($conn, $query_name);
                     <input type="number" name="sections[<?php echo $i;?>][score]" class="score" value="<?php echo $score;?>">
                     <input type="number" name="sections[<?php echo $i;?>][scoreHide]" class="scoreHide" id="scoreHide" >
                     
+                  </td>
+                  <td>
+                    <button type="button" class="delete-btn btn btn-danger btn-sm" 
+                            onclick="confirmDelete('<?php echo $id; ?>', '<?php echo $matric; ?>', '<?php echo $effectivedate; ?>')">
+                        <i class="fas fa-trash"></i>
+                    </button>
                   </td>
                 <tr>
                   
@@ -445,6 +475,66 @@ $result_name = mysqli_query($conn, $query_name);
   <!-- Page level custom scripts -->
   <script src="../js/demo/chart-area-demo.js"></script>
   <script src="../js/demo/chart-pie-demo.js"></script>
+
+  <script>
+  function confirmDelete(id, matric, effectivedate) {
+      // Store the button and row reference
+      const button = event.currentTarget;
+      const row = $(button).closest('tr');
+      
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              $.ajax({
+                  url: 'delete_result.php',
+                  type: 'POST',
+                  data: {
+                      id: id,
+                      matric: matric,
+                      effectivedate: effectivedate
+                  },
+                  dataType: 'json',
+                  success: function(response) {
+                      if(response.success) {
+                          // Remove the row using jQuery
+                          row.fadeOut(400, function() {
+                              $(this).remove();
+                          });
+                          
+                          Swal.fire(
+                              'Deleted!',
+                              'Record has been deleted.',
+                              'success'
+                          );
+                      } else {
+                          Swal.fire(
+                              'Error!',
+                              'Failed to delete record.',
+                              'error'
+                          );
+                      }
+                  },
+                  error: function() {
+                      Swal.fire(
+                          'Error!',
+                          'Something went wrong.',
+                          'error'
+                      );
+                  }
+              });
+          }
+      });
+  }
+
+
+</script>
 
 </body>
 

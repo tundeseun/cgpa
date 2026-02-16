@@ -14,10 +14,15 @@ include_once('../function/script.php');
 
 $admin = $_SESSION["name"];
 
-if(isset($_POST['logout'])){
+if((isset($_POST['logout'])) ){
   session_destroy();
   header('Location: ../');
 }
+
+  if(!($dept && $admin && $name)){
+    session_destroy();
+    header('Location: ../');
+  }
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -210,7 +215,7 @@ include('../menu/menu.php');
 // include('function/script.php');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //$coz=$_POST['coz'];
-    chkstudentrecord($_FILES['excelFile'],$conn,$admin,$token);
+    chkstudentrecord($_FILES['excelFile'],$conn,$admin,$token,$dept);
 }
 
 ?>

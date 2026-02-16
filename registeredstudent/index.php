@@ -176,7 +176,7 @@ if(!($dept && $admin && $name)){
                 <label for="session">Select Session:</label>
                 <input type="hidden" value="" name="sessioned">
                 <select name="sessioned" class="form control" id="">
-                  <option value="" selected disabled></option>
+                  <option value="" selected disabled>Select Session</option>
                   <?php
                   //include 'conn.php';
                   $query = "SELECT sec FROM sec_examined GROUP BY sec ORDER by sec desc";
@@ -197,7 +197,10 @@ if(!($dept && $admin && $name)){
             <?php
             if (isset($_POST["submit"])) {
               $sessioned = $_POST["sessioned"];
+              if($sessioned){
+
               $querygen = "SELECT new.numeration, new.Surname, new.Other_names, new.Telephone, new.email, zmain_app.department, reginvoice.appno, reginvoice.sessioned FROM new INNER JOIN zmain_app ON zmain_app.user_id=new.id INNER JOIN reginvoice ON reginvoice.appno=new.numeration WHERE zmain_app.department='$dept' and reginvoice.sessioned='$sessioned' AND reginvoice.amount_paid=reginvoice.amount_charge AND reginvoice.amount_paid>0 AND zmain_app.degree <> '3' AND zmain_app.degree <> '4' AND zmain_app.degree <> '5'";
+              }
               if ($resultgen = $conn->query($querygen)) {
 
 

@@ -1,4 +1,5 @@
 <?php session_start();
+error_reporting(0);
 $dept=$_SESSION["dept_new"];
 $name=$_SESSION["name"];
 include_once('../function/script.php');
@@ -244,7 +245,7 @@ if(isset($_POST['logout'])){
 
 
 
-            <label for="upload_matric">Upload Matric<span style="color: red;">*</span></label>
+            <label for="upload_matric">Upload Matric(The Excel file should contain only the matric numbers, without a heading.)<span style="color: red;">*</span></label>
             <input type="file" value="" name="upload_matric">
 
 
@@ -263,24 +264,27 @@ if(isset($_POST['logout'])){
         $external = $_POST["external"];
         $approval = $_POST["approval"];
 
-        if(isset ($effective)){
+            assignExternalAndEffectiveDate($conn, $excelFile, $effective,$approval, $external, $admin);
+
+
+        // if(isset ($effective)){
 
             
-                    $query_lock = "SELECT DISTINCT status FROM testscore WHERE effectivedate = '$effective'";
-                    $result_lock = mysqli_query($conn, $query_lock);
-                    $row_lock = mysqli_fetch_assoc($result_lock);
-                    $lock_status = $row_lock['status'];
+        //             $query_lock = "SELECT DISTINCT status FROM testscore WHERE effectivedate = '$effective'";
+        //             $result_lock = mysqli_query($conn, $query_lock);
+        //             $row_lock = mysqli_fetch_assoc($result_lock);
+        //             $lock_status = $row_lock['status'];
                     
-                    if($lock_status == 1){
+        //             if($lock_status == 1){
                     
-                      echo "<script>alert('Students Result With Selected Effective Date Has Been Locked');</script>";
+        //               echo "<script>alert('Students Result With Selected Effective Date Has Been Locked');</script>";
                     
                     
-                    } elseif($lock_status == 0){
+        //             } elseif($lock_status == 0){
                     
-                      assignExternalAndEffectiveDate($conn, $excelFile, $effective,$approval, $external, $admin);
-                    }
-        }
+        //               assignExternalAndEffectiveDate($conn, $excelFile, $effective,$approval, $external, $admin);
+        //             }
+        // }
     }
     ?>
 

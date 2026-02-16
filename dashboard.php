@@ -108,6 +108,9 @@ if ($p == "disablesd"||$p == "enablesd") {
 if ($p == "editresult") {
     header("Location: editresult");
 }
+if ($p == "deleteresult") {
+    header("Location: deleteresult");
+}
 if ($p == "hod") {
     header("Location: createHod");
 }
@@ -168,12 +171,21 @@ if ($p == "graduating") {
 if ($p == "regstatus") {
     header("Location: regstatus");
 }
+if ($p == "graduating-word") {
+    header("Location: graduating/word.php");
+}
+if ($p == "regstatus-word") {
+    header("Location: regstatus/word.php");
+}
 if ($p == "result") {
     header("Location:result.php?sec2=".$sec.'&degree='.$degree.'&special='.$special.'ext='.$ext.'effect='.$effect);  //48/927/5/458/2019-05-24
     //result.php?degree=48&special=927&sec2=5&ext=458&effect=2019-05-24&send=Submit
 }
 if ($p == "processresult") {
     header("Location: processresult");
+}
+if ($p == "ictadmin") {
+    header("Location: student_search.php");
 }
 
 }

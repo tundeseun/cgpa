@@ -209,6 +209,15 @@ $admin = $_SESSION["name"];
                 </select>
               </div>
               <div class="form-group">
+                <label for="mode">Select Mode of Study:</label>
+                <select id="mode" name="mode">
+                  <option value="" selected>Mode of Study</option>
+                  <option value="1">Full-Time</option>
+                  <option value="2">Part-Time</option>
+                  <!-- Options will be populated dynamically using AJAX -->
+                </select>
+              </div>
+              <div class="form-group">
                 <label for="sec">Session of Graduation:</label>
                 <select id="sec" name="sec">
                   <option value="">Select Session</option>

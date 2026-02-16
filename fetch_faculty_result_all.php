@@ -22,7 +22,9 @@ $queryDisplay = "
   testscore.field AS field_id,
   testscore.resulttype AS resulttype,
   testscore.stage AS stage,   
-  testscore.mode AS smode, 
+  testscore.mode AS smode,
+  testscore.external AS external, 
+  testscore.session_of_grad AS sec,  
   testscore.effectivedate AS effectivedate, 
   testscore.faculty_date AS facultyDate 
   FROM testscore 

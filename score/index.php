@@ -159,7 +159,8 @@ include('../menu/menu.php');
                         <div class="form-group">
                             <label for="programme">Select Course:</label>
                             <select name="coz">
-                           <?php showcourse2($conn,$dept);?>
+                              
+                           <?php showcourse($conn,$dept);?>
                             </select>
                             
                         </div>
@@ -179,7 +180,7 @@ include('../menu/menu.php');
 // include('function/script.php');
 if (isset($_POST['upexcel'])) {
     $coz=$_POST['coz'];
-    uploadscorewithoutspecialization($_FILES['excelFile'],$conn,$sec,$coz,$admin);
+    uploadscorewithoutspecialization($_FILES['excelFile'],$conn,$sec,$coz,$admin,$dept);
 }
 
 ?>

@@ -241,13 +241,17 @@ $admin = $_SESSION["name"];
 
             <form method="post" enctype="multipart/form-data">
               <?php
-              $rec = mysqli_query($conn, "select studentrecord.matric,studentrecord.name,field_new.field_title AS field,studentrecord.status,studentrecord.specialization from studentrecord INNER JOIN field_new ON field_new.id=studentrecord.specialization where studentrecord.code='$token'") or die(mysqli_error($con));
+              $rec = mysqli_query($conn, "select studentrecord.matric,degree_new.degree AS degree,studentrecord.name,field_new.field_title AS field,studentrecord.status,studentrecord.specialization from studentrecord LEFT JOIN field_new ON field_new.id=studentrecord.specialization LEFT JOIN zmain_app ON zmain_app.user_id=studentrecord.user_id LEFT JOIN degree_new ON zmain_app.degree=degree_new.id where studentrecord.code='$token' GROUP BY studentrecord.user_id") or die(mysqli_error($con));
               echo " <table  class='table cmt' id='myTable'>
                                         
                                                      <tr>
                                                          <th>Matric</th>
                                                          
                                                          <th>Name</th>
+
+                                                         <th>Degree</th>
+
+                                                        <th >Select New Degree</th>
                                                          
                                                          <th>Specialization</th>
                                                          
@@ -262,6 +266,20 @@ $admin = $_SESSION["name"];
                 echo "<tr class='data'>
                                              <td>" . $insertedData['matric'] . "</td>
                                              <td>" . $insertedData['name'] . "</td>
+                                             <td id='responseDiv2' class='responseDiv2'>" . $insertedData['degree'] . "</td>
+                                                                     <td > ";
+
+                    $degreevalue = mysqli_query($conn, "select DISTINCT degree_new.degree AS degree,fieldofinterest5.degree AS degreeId from fieldofinterest5 INNER JOIN degree_new on fieldofinterest5.degree=degree_new.id where fieldofinterest5.dept='$dept' ") or die(mysqli_error($con));
+                    echo "<select name='degree' id='degree' class='sinput degree'>
+                                                <option value= selected>Select</option>";
+
+                    while ($seldegree = mysqli_fetch_array($degreevalue))
+                    //  //print_r($record);
+                    {
+                        echo " <option value=" . $seldegree['degreeId'] . ">" . $seldegree['degree'] . "</option>";
+                    }
+                    echo " </select>
+                                                </td>
                                              <td id='responseDiv' class='responseDiv'>" . $insertedData['field'] . "</td>
                                              <td > ";
 
@@ -338,32 +356,52 @@ $admin = $_SESSION["name"];
   </a>
 
   <script>
-    // Loop through each set of select elements
-    var selectElements = document.querySelectorAll('.data');
-    selectElements.forEach(function(selectElement) {
-      // Find the elements within the current set
-      var fieldSelect = selectElement.querySelector('.field');
-      var matricInput = selectElement.querySelector('.matric');
-      var responseDiv = selectElement.querySelector('.responseDiv');
+// Loop through each set of select elements
+var selectElements = document.querySelectorAll('.data');
+selectElements.forEach(function(selectElement) {
+    // Find the elements within the current set
+    var fieldSelect = selectElement.querySelector('.field');
+    var degreeSelect = selectElement.querySelector('.degree');
+    var matricInput = selectElement.querySelector('.matric');
+    var responseDiv = selectElement.querySelector('.responseDiv');
+    var responseDiv2 = selectElement.querySelector('.responseDiv2');
 
-      // Add change event listener to the field select element
-      fieldSelect.addEventListener('change', function() {
+    // Add change event listener to the field select element
+    fieldSelect.addEventListener('change', function() {
         var field = this.value;
+        
         var matric = matricInput.value;
-
+        
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            // Response from PHP script
-            var successMessage = this.responseText;
-            responseDiv.innerHTML = successMessage;
-          }
+            if (this.readyState == 4 && this.status == 200) {
+                // Response from PHP script
+                var successMessage = this.responseText;
+                responseDiv.innerHTML = successMessage;
+            }
         };
         xhttp.open("GET", "../resolvefield.php?field=" + field + "&matric=" + matric, true);
         xhttp.send();
-      });
     });
-  </script>
+    // Add change event listener to the degree select element
+    degreeSelect.addEventListener('change', function() {
+        var degree = this.value;
+        
+        var matric = matricInput.value;
+        
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Response from PHP script
+                var successMessage = this.responseText;
+                responseDiv2.innerHTML = successMessage;
+            }
+        };
+        xhttp.open("GET", "../resolvefield.php?degree=" + degree + "&matric=" + matric, true);
+        xhttp.send();
+    });
+});
+</script>
 
 
   <!-- Bootstrap core JavaScript-->
